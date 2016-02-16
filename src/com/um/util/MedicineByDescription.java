@@ -63,7 +63,7 @@ public class MedicineByDescription {
 		String formattedDescriptionString = "";
 		//
 		Map<String, HashMap<String, ArrayList<String>>> keyworCodeMap = DiagMedicineProcess.creatrReference(DiagClassifyData.descriptionKeywords);
-		System.out.println(keyworCodeMap);
+//		System.out.println(keyworCodeMap);
 		// 3. 根据输入，确定输入编码
 		Map<String, String> formattedMap = new HashMap<String, String>();
 		Set<String> projectKeySet = keyworCodeMap.keySet();

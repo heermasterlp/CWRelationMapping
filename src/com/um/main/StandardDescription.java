@@ -62,7 +62,7 @@ public class StandardDescription {
 		String descriptionString = MedicineByDescription.formattedDescriptionByCount(eHealthRecords.get(0).getConditionsdescribed());
 		System.out.println(eHealthRecords.get(0).getConditionsdescribed() + " | " + descriptionString);
 		
-		System.exit(0);
+//		System.exit(0);
 		
 		// 4. save the standard description
 		File statText = new File("/Users/heermaster/Documents/file/stantarddescription.txt");
