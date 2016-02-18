@@ -65,13 +65,16 @@ public class StandardDescription {
 //		System.exit(0);
 		
 		// 4. save the standard description
-		File statText = new File("/Users/heermaster/Documents/file/stantarddescription.txt");
+//		File statText = new File("/Users/heermaster/Documents/file/stantarddescription.txt");
+		File statText = new File("/Users/peterliu/Documents/file/stantarddescription.txt");
+		
         FileOutputStream is = new FileOutputStream(statText);
         OutputStreamWriter osw = new OutputStreamWriter(is);    
         Writer w = new BufferedWriter(osw);
         for (EHealthRecord eRecord: eHealthRecords) {
 			String outString = eRecord.getConditionsdescribed() + "-----" + MedicineByDescription.formattedDescriptionByCount(eRecord.getConditionsdescribed());
 			w.write(outString + "\n");
+			w.write("\n");
         }
         w.close();
         System.out.println("-----Process end-------");
