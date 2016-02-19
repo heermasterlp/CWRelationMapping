@@ -453,6 +453,9 @@ public class DiagMedicineProcess {
 		for(EHealthRecord eRecord : eHealthRecords){
 			if(eRecord.getChineseMedicines() != null && eRecord.getChineseMedicines().size() > 0){
 				for(ChineseMedicine c : eRecord.getChineseMedicines()){
+					if (c.getNameString().contains("水煎内服")||c.getNameString().contains("煎药机煎药")) {
+						continue;
+					}
 					allCnMedicines.add(c.getNameString());
 				}
 			}
