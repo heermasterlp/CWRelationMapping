@@ -38,13 +38,13 @@ public class PreprocessData {
 		
 		Map<String, Integer> allMedicinesMap = DiagMedicineProcess.statisEhealthMedicine(eRecords);
 		allMedicinesMap = DiagMedicineProcess.sortMapByValue(allMedicinesMap);
-//		System.out.println(allMedicinesMap);
+		
 		Set<String> medicineNameSet = allMedicinesMap.keySet();
 		List<String> medicinelList = new ArrayList<String>();
-		for(String s : medicineNameSet){
-			
-			medicinelList.add(s);
-		}
+		medicinelList.addAll(medicineNameSet);
+		
+		
+		System.out.println("medicine size:" + medicinelList.size());
 		return medicinelList;
 	}
 	
@@ -172,7 +172,6 @@ public class PreprocessData {
 			
 			processResult.put(e, dataMap);
 		}
-		
 		// display
 		
 		/**
