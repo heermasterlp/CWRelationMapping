@@ -673,8 +673,6 @@ public class DiagMedicineProcess {
 		for(char c : chars){
 			pinyin += PinyinHelper.toHanyuPinyinStringArray(c, format)[0];
 		}
-		
-		
 		return pinyin ;
 	}
 	
