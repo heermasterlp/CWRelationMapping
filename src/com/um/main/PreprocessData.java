@@ -13,12 +13,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bson.Document;
+
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.um.classify.CWRelationMapping;
+import com.um.dao.ConnectionDB;
 import com.um.data.DiagClassifyData;
 import com.um.model.ChineseMedicine;
 import com.um.model.EHealthRecord;
+import com.um.mongodb.converter.EhealthRecordConverter;
 import com.um.util.DiagMedicineProcess;
 
 public class PreprocessData {
@@ -101,8 +108,31 @@ public class PreprocessData {
 		List<String> titleList = new ArrayList<String>(); // 标题
 //		titleList.add("批次");
 		// 1. 读取病例
-		CWRelationMapping cwRelationMapping = new CWRelationMapping();
-		List<EHealthRecord> allHealthRecords = cwRelationMapping.queryEhealthData();
+		
+		List<EHealthRecord> allHealthRecords = new ArrayList<EHealthRecord>() ; // All records data
+		
+		MongoCollection<Document> collection = ConnectionDB.getCollection("db", "ehealthdata");
+		
+		String batchString = "2012";
+		Document conditions = new Document();
+		conditions.append("ehealthrecord.batch", batchString);
+		
+		FindIterable<Document> iterable = collection.find(conditions);
+		if(iterable == null){
+			return ;
+		}
+		iterable.forEach(new Block<Document>() {
+
+			@Override
+			public void apply(Document document) {
+				// TODO Auto-generated method stub
+				EHealthRecord eHealthRecord = EhealthRecordConverter.toEHealthRecord(document);
+				allHealthRecords.add(eHealthRecord);
+			}
+			
+		});
+		
+		System.out.println("all records size: " + allHealthRecords.size());
 //		List<EHealthRecord> allHealthRecords = cwRelationMapping.queryEhealthDataByCollection("ehealthdata");
 		// 2. 诊断关键字
 		List<String> diagnoseKeyWords = getDiagnoseKeywords();
@@ -177,7 +207,7 @@ public class PreprocessData {
 		/**
 		 *  arff文件
 		 */
-		File statText = new File("/Users/heermaster/Documents/file/statsTest.arff");
+		File statText = new File("/Users/peterliu/Documents/file/statsTest.arff");
         FileOutputStream is = new FileOutputStream(statText);
         OutputStreamWriter osw = new OutputStreamWriter(is);    
         Writer w = new BufferedWriter(osw);
@@ -211,7 +241,7 @@ public class PreprocessData {
 		/**
 		 *  csv 文件
 		 */
-		statText = new File("/Users/heermaster/Documents/file/statsTest.csv");
+		statText = new File("/Users/peterliu/Documents/file/statsTest.csv");
         is = new FileOutputStream(statText);
         osw = new OutputStreamWriter(is);    
         w = new BufferedWriter(osw);
@@ -238,7 +268,7 @@ public class PreprocessData {
         /**
          *  转换表
          */
-        statText = new File("/Users/heermaster/Documents/file/tranlations.csv");
+        statText = new File("/Users/peterliu/Documents/file/tranlations.csv");
         is = new FileOutputStream(statText);
         osw = new OutputStreamWriter(is);    
         w = new BufferedWriter(osw);
